@@ -42,8 +42,8 @@ class SliceInfo(Extension):
         Preferences.getInstance().setValue("info/asked_send_slice_info", True)
 
     def _onWriteStarted(self, output_device):
-        if not Preferences.getInstance().getValue("info/send_slice_info"):
-            return # Do nothing, user does not want to send data
+        #if not Preferences.getInstance().getValue("info/send_slice_info"):
+        return # Do nothing, user does not want to send data
         settings = Application.getInstance().getMachineManager().getActiveProfile()
 
         # Load all machine definitions and put them in machine_settings dict
