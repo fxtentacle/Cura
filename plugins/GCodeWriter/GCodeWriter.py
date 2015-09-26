@@ -5,6 +5,7 @@ from UM.Mesh.MeshWriter import MeshWriter
 from UM.Logger import Logger
 from UM.Application import Application
 import io
+import re
 
 
 class GCodeWriter(MeshWriter):
@@ -19,6 +20,24 @@ class GCodeWriter(MeshWriter):
         scene = Application.getInstance().getController().getScene()
         gcode_list = getattr(scene, "gcode_list")
         if gcode_list:
+            
+            # start Hajo's safety check
+            check_lines = []
+            for layer in gcode_list:
+                check_lines.extend(layer.split("\n"))
+            cur_extrude = 0.0;
+            extrude_safety = 10.0;
+            for i, line in enumerate(check_lines):
+                match = re.search(r'E([0-9.]+)', line)
+                Logger.log("e", "GCode:" + line + " match "+ str(not not match) )
+                if match:
+                    extrude = float( match.group(1) )
+                    if extrude > cur_extrude + extrude_safety:
+                        Logger.log("e", "GCode is not safe! Extrusion gap from "+str(cur_extrude)+" to "+str(extrude))
+                        return False
+                    cur_extrude = extrude
+            # end Hajo's safety check                        
+
             for gcode in gcode_list:
                 stream.write(gcode)
             return True
