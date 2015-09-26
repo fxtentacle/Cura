@@ -28,6 +28,7 @@ class GCodeWriter(MeshWriter):
             cur_extrude = 0.0;
             extrude_safety = 10.0;
             for i, line in enumerate(check_lines):
+                Logger.log("d", "GCode:" + line )
                 match = re.search(r'E([0-9.]+)', line)
                 if match:
                     extrude = float( match.group(1) )
