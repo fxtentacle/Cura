@@ -29,9 +29,9 @@ class GCodeWriter(MeshWriter):
             extrude_safety = 10.0;
             for i, line in enumerate(check_lines):
                 match = re.search(r'E([0-9.]+)', line)
-                Logger.log("e", "GCode:" + line + " match "+ str(not not match) )
                 if match:
                     extrude = float( match.group(1) )
+                    Logger.log("d", "GCode:" + line + " E "+ str(extrude) )
                     if extrude > cur_extrude + extrude_safety:
                         Logger.log("e", "GCode is not safe! Extrusion gap from "+str(cur_extrude)+" to "+str(extrude))
                         return False
