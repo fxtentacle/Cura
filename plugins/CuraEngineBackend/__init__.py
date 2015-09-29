@@ -2,6 +2,9 @@
 # Cura is released under the terms of the AGPLv3 or higher.
 
 #Shoopdawoop
+import cura
+from cura import LayerData
+from . import Cura_pb2
 from . import CuraEngineBackend
 
 from UM.i18n import i18nCatalog
