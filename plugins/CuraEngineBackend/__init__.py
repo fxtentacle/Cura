@@ -11,7 +11,7 @@ import numpy
 import math
 import copy
 import cura
-from cura import LayerData
+from . import LayerData
 from . import Cura_pb2
 from . import CuraEngineBackend
 
